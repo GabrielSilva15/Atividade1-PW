@@ -16,20 +16,10 @@ export class PatchPetVaccinatedController{
             }
 
             const data = request.body;
+            data.vaccinated = true;
+            let petAtualizado =await this.patchPetVaccinatedUseCase.execute(cnpj,id,data);
 
-            let resultado:any=petshops.filter((petshop)=>{if(petshop.cnpj === cnpj) return petshop});
-            let pets:Pet[] = resultado[0].pets;
-            let atualizaPet= pets.find((pet:any) => {return pet.id === id}) as Pet;
-
-            if(!atualizaPet){
-                throw Error("Pet com esse id nao encontrado!");
-            }
-
-            atualizaPet.vaccinated= true;
-        
-            await this.patchPetVaccinatedUseCase.execute(cnpj,id,atualizaPet);
-
-            return response.status(201).json(atualizaPet)
+            return response.status(201).json(petAtualizado)
 
         } catch (error:any) {
             return response.status(400).json({error:error.message})

@@ -21,28 +21,10 @@ export class PutPetController{
             putPetDTO.parse(request.body);
 
             const data:z.infer<typeof putPetDTO> = request.body;
-
-            let resultado:any=petshops.filter((petshop)=>{if(petshop.cnpj === cnpj) return petshop});
-            let pets:Pet[] = resultado[0].pets;
-            let pet= pets.find(pet => {return pet.id === id}) as Pet;
-
-            if(!pet){
-                throw Error("Pet com esse id nao encontrado!");
-            }
             
-            let petAtualizado={
-                id:pet.id,
-                name:data.name,
-                type:data.type,
-                description:data.type,
-                vaccinated:pet.vaccinated,
-                deadline_vaccination:new Date(data.deadline_vaccination),
-                created_at:pet.created_at
-                };
+            let petAtualizado = await this.putPetUseCase.execute(cnpj,id,{...data, deadline_vaccination:new Date(data.deadline_vaccination)});
 
-            await this.putPetUseCase.execute(cnpj,id,petAtualizado);
-
-            return response.status(201).json(petAtualizado);
+            return response.status(200).json(petAtualizado);
        } catch (error:any) {
             return response.status(400).json({error:error.message});
        }

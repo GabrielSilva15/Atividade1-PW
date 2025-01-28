@@ -6,5 +6,5 @@ export interface IPetsRepository{
     createPet(cnpj:string,pet:Pet):Promise<Pet>
     putPet(cnpj:string,id:string,petAtualizado:Pet):Promise<Pet>
     patchPetVaccinated(cnpj:string,id:string,petAtualizado:Pet):Promise<Pet>
-    deletePet(cnpj:string,id:string):Promise<Pet[]>
+    deletePet(cnpj:string,id:string):Promise<void>
 }

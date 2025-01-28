@@ -2,8 +2,8 @@ import { CreatePetshopUseCase } from "./createPetshopUseCase";
 import { CreatePetshopDTO } from "./createPetshopDTO";
 import { Request,Response } from "express";
 import {z} from "zod"
-import { uuid } from "uuidv4";
 import { petshops } from "../../repositories";
+
 
 export class CreatePetshopController{
     constructor(private createPetshopUseCase:CreatePetshopUseCase){}
@@ -20,7 +20,8 @@ export class CreatePetshopController{
                 throw Error("Cnpj ta no sistema");
             }
 
-            const petshopCreated = await this.createPetshopUseCase.execute({...data,pets:[]});
+            
+            const petshopCreated = await this.createPetshopUseCase.execute({...data});
 
             return response.status(201).json({
                 id:petshopCreated.id,
@@ -28,6 +29,7 @@ export class CreatePetshopController{
                 cnpj:petshopCreated.cnpj,
                 pets:petshopCreated.pets            
             });
+
         } catch (error:any) {
             return response.status(400).json({error:error.message});
         }

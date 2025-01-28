@@ -11,29 +11,15 @@ export class DeletePetController{
         try {
             const {cnpj}:any = request.headers;
 
-            
             if(!cnpj){
                 throw Error("Cnpj is empty!");
             }
 
             const {id} = request.params;
 
-            let resultado:any=petshops.filter((petshop)=>{if(petshop.cnpj === cnpj) return petshop});
-
-            if(resultado.let === 0){
-                throw Error("Petshop not exists!");
-            }
-            
-            let pets:Pet[]= resultado[0].pets;
-            let getPet= pets.find((pet) => {return pet.id === id}) as Pet;
-
-            if(!getPet){
-                throw Error("Pet com esse id nao encontrado!");
-            }
-
             await this.deletePetUseCase.execute(cnpj,id);
 
-            return response.status(201).json(pets);
+            return response.status(201).json("Pet deletado com sucesso");
 
         } catch (error:any) {
             return response.status(404).json({error:error.message})
