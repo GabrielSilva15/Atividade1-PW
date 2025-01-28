@@ -20,13 +20,8 @@ export class CreatePetController{
             if(!cnpj){
                 throw Error("Cnpj passado nao corresponde a nenhum petshop no sistema!");
             }
-
-            console.log(data);
             
-            
-            let newPet =await this.createPetUseCase.execute(cnpj,{...data,vaccinated:false,deadline_vaccination:new Date(data.deadline_vaccination)});  
-            
-            
+            let newPet =await this.createPetUseCase.execute(cnpj,{...data,vaccinated:false,deadline_vaccination:new Date(data.deadline_vaccination),created_at:new Date()});  
 
             return response.status(201).json({
                 id:newPet.id,
