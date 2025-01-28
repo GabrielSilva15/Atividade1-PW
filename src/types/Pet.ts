@@ -6,7 +6,6 @@ export class Pet{
     public type!: string 
     public description!: string 
     public vaccinated!: boolean 
-    private petshopCnpj?: string  
     public deadline_vaccination!: Date
     public created_at!:Date
     

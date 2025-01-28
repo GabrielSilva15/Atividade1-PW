@@ -6,13 +6,12 @@ export class CreatePetshopUseCase{
 
     async execute(data:any){
 
-        const newPetshop ={
+        const newPetshop = {
                 id:data.id,
                 name:data.name,
                 cnpj:data.cnpj,
                 pets:data.pets 
         }
-        
         
         let createPetshop = await this.petShopRepository.create(newPetshop);
         
